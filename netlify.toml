@@ -1,4 +1,4 @@
 [build]
   Command = "npm run build:lambda && npm run build:app"
   Functions = "lambda"
-  Publish = "build"
+  Publish = "dist"
