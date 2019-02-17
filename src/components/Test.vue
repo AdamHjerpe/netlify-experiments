@@ -59,7 +59,6 @@ export default {
         plusOne: this.plusOne,
         guestName: this.guestName
       }
-      console.log(process.env)
       fetch(`#{process.env.VUE_APP_LAMBDA_URL}/register`, {
         method: 'POST',
         body: JSON.stringify(newBooking),
@@ -72,7 +71,7 @@ export default {
         }
         return res.json()
       }).catch(err => {
-        console.error(err)
+        throw err
       })
     },
     bookings () {
