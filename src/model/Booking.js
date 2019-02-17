@@ -12,7 +12,8 @@ const BookingSchema = new Schema({
     required: true
   },
   phone: {
-    type: String
+    type: String,
+    required: false
   },
   plusOne: {
     type: Boolean,
@@ -24,5 +25,6 @@ const BookingSchema = new Schema({
 },
 { timestamps: true }
 )
+const Booking = mongoose.model('Booking', BookingSchema)
 
-export default mongoose.model('Booking', BookingSchema)
+export default Booking
