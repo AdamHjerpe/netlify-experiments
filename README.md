@@ -1,5 +1,5 @@
 # netlify-experiments
-
+[![Netlify Status](https://api.netlify.com/api/v1/badges/0522951f-5855-49a2-96a1-f7ee7c44250c/deploy-status)](https://app.netlify.com/sites/vigorous-mahavira-310c19/deploys)
 ## Project setup
 ```
 yarn install
