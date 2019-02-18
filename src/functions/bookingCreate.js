@@ -1,8 +1,9 @@
+// import mongoose from 'mongoose'
 // eslint-disable-next-line
-import db from '../services/server'
+import db from './server'
 
 // Load the Product Model
-import Booking from '../model/Booking'
+import Booking from './bookingModel'
 
 exports.handler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
@@ -10,9 +11,7 @@ exports.handler = async (event, context) => {
   try {
     const data = JSON.parse(event.body)
     const { name, email, plusOne, guestName } = data
-    // const id = mongoose.Types.ObjectId()
     const booking = {
-      // _id: id,
       name: name,
       email: email,
       plusOne: plusOne,
@@ -23,9 +22,9 @@ exports.handler = async (event, context) => {
       data: booking
     }
 
-    // Use Product.Model to create a new product
     await Booking.create(booking)
-
+    // db.close()
+    console.log('Booking created for ' + booking.name) // output to netlify function log
     return {
       statusCode: 201,
       body: JSON.stringify(response)

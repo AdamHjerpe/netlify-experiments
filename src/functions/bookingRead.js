@@ -1,14 +1,13 @@
+// import mongoose from 'mongoose'
 // eslint-disable-next-line
-import db from '../services/server'
+import db from './server'
 
-// Load the Product Model
-import Booking from '../model/Booking'
+import Booking from './bookingModel'
 
 exports.handler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
   try {
-    // Use Product.Model to find all products
     const bookings = await Booking.find()
     const response = {
       msg: 'Bookings successfully found',
