@@ -1,6 +1,8 @@
 import mongoose from 'mongoose'
 // eslint-disable-next-line no-unused-vars
-require('dotenv-flow').config()
+if (process.env.NODE_env !== 'production') {
+  require('dotenv-flow').config()
+}
 
 // Initialize connection to database
 const dbUrl = process.env.MONGO_URL
