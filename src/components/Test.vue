@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import api from '@/services/api'
 export default {
   data: () => {
     return {
@@ -47,11 +48,12 @@ export default {
       email: 'test@test.com',
       phone: '555-5555',
       plusOne: false,
-      guestName: ''
+      guestName: '',
+      bookings: []
     }
   },
   methods: {
-    register () {
+    async register () {
       const newBooking = {
         name: this.name,
         email: this.email,
@@ -59,12 +61,8 @@ export default {
         plusOne: this.plusOne,
         guestName: this.guestName
       }
-      fetch(`#{process.env.VUE_APP_LAMBDA_URL}/register`, {
-        method: 'POST',
-        body: JSON.stringify(newBooking),
-        headers: {
-          'Content-Type': 'application/json'
-        }
+      api().post('/register', {
+        body: JSON.stringify(newBooking)
       }).then(res => {
         if (res.status !== 200 && res.status !== 201) {
           throw new Error('Failed!')
@@ -73,9 +71,40 @@ export default {
       }).catch(err => {
         throw err
       })
+    }
+  },
+  mounted: {
+    async bookings () {
+      // console.log(process.env.VUE_APP_LAMBDA_URL)
+      try {
+        const response = await api().get('/bookings')
+        const incomingBookings = await response.data
+        incomingBookings.forEach(booking => {
+          this.bookings.push(booking)
+        })
+        // console.log(json)
+      } catch (err) {
+        throw err
+      }
     },
-    bookings () {
-
+    componentDidMount () {
+    // Fetch the products from the database
+      fetch('/.netlify/functions/productRead')
+        .then(res => res.json())
+        .then(response => {
+          // console.log(response.msg)
+          const inputs = [...this.state.inputs]
+          const bookings = response.data
+          bookings.forEach(product => {
+            const productProps = this.setProductProps(product)
+            inputs.push(productProps)
+          })
+          this.setState({
+            bookings,
+            inputs
+          })
+        })
+        .catch(err => console.log('Error retrieving products: ', err))
     }
   }
 }
