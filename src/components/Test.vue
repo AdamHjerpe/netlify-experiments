@@ -41,6 +41,7 @@
 
 <script>
 import api from '@/services/api'
+
 export default {
   data: () => {
     return {
@@ -104,7 +105,9 @@ export default {
             inputs
           })
         })
-        .catch(err => console.log('Error retrieving products: ', err))
+        .catch(err => {
+          throw new Error('Error retrieving products: ' + err)
+        })
     }
   }
 }
